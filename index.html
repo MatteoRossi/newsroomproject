@@ -179,5 +179,33 @@ border-radius: 4px;
 
 </style>
 
+<script>
+   
+   var Airtable = require('airtable');
+    var base = new Airtable({ apiKey: 'keyavHVWs9cGXtJjo' }).base('appX6REX4AHVj8Qd2');
+
+    base('master').select({
+        // Selecting the first 3 records in main:
+        maxRecords: 3,
+        view: "main"
+    }).eachPage(function page(records, fetchNextPage) {
+        // This function (`page`) will get called for each page of records.
+
+        records.forEach(function (record) {
+            console.log('Retrieved', record.get('id'));
+        });
+
+        // To fetch the next page of records, call `fetchNextPage`.
+        // If there are more records, `page` will get called again.
+        // If there are no more records, `done` will get called.
+        fetchNextPage();
+
+    }, function done(err) {
+        if (err) { console.error(err); return; }
+    });
+
+
+
+</script>
 </html>
 
